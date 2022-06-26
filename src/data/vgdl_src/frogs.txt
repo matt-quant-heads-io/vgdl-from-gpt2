@@ -7,6 +7,16 @@ BasicGame
     sprite5 > Missile orientation=RIGHT csprite3 > speed=0.2 color=color5 csprite4 > speed=0.1 color=color6
     sprite6 > Immovable color=color7
     sprite6 > color=color8
+  LevelMapping
+    G > csprite2
+    0 > csprite1
+    1 > sprite1 csprite1
+    2 > sprite1 sprite6 sprite3
+    - > csprite4
+    x > csprite3
+    = > sprite3 csprite1
+    w > sprite6
+    A > sprite6
   InteractionSet
     csprite2 sprite6 > killSprite
     sprite6 sprite3 > changeResource resource=sprite4 value=2
@@ -20,13 +30,3 @@ BasicGame
   TerminationSet
     SpriteCounter stype=csprite2 limit=0 win=True
     SpriteCounter stype=sprite6 limit=0 win=False
-  LevelMapping
-    G > csprite2
-    0 > csprite1
-    1 > sprite1 csprite1
-    2 > sprite1 sprite6 sprite3
-    - > csprite4
-    x > csprite3
-    = > sprite3 csprite1
-    w > sprite6
-    A > sprite6

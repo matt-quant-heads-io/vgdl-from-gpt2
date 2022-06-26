@@ -4,6 +4,10 @@ BasicGame
     sprite2 > stype=sprite4 cooldown=3 csprite1 > Chaser color=color2 csprite2 > Fleeing color=color3
     sprite3 > Immovable color=color4
     sprite4 > color=color5
+  LevelMapping
+    0 > csprite2
+    A > sprite4
+    w > sprite3
   InteractionSet
     sprite2 sprite3 > stepBack
     sprite4 sprite3 > stepBack
@@ -11,10 +15,6 @@ BasicGame
     sprite1 csprite2 > killSprite
     csprite2 sprite4  > transformTo stype=sprite1
     csprite2 sprite1 > transformTo stype=csprite1
-  LevelMapping
-    0 > csprite2
-    A > sprite4
-    w > sprite3
   TerminationSet
     SpriteCounter stype=csprite2 win=True
     SpriteCounter stype=sprite4 win=False
