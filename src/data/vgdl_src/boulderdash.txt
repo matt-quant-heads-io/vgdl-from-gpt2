@@ -1,0 +1,39 @@
+BasicGame
+  SpriteSet
+    sprite1 > Flicker color=color1 limit=1 singleton=True
+    sprite2 > Immovable color=color2
+    sprite3 > Immovable color=color3
+    sprite4 > Resource color=color4 limit=10 shrinkfactor=0.25
+    sprite5 > Missile orientation=DOWN color=color5 speed=0.2
+    sprite6 > csprite1 > ShootAvatar stype=sprite1 csprite2 > RandomNPC ccsprite1 > color=color6 ccsprite2 > color=color7
+  LevelMapping
+    . > sprite2
+    E > sprite3
+    o > sprite5
+    x > sprite4
+    c > ccsprite1
+    b > ccsprite2
+    w > wall
+    A > csprite1
+  InteractionSet
+    sprite2 csprite1 > killSprite
+    sprite2 sprite1  > killSprite
+    sprite4 csprite1 > collectResource scoreChange=5
+    sprite4 csprite1 > killSprite
+    sprite6 wall > stepBack
+    sprite6 sprite5 > stepBack
+    csprite1 sprite5 > killIfFromAbove
+    csprite1 ccsprite2 > killSprite
+    csprite1 ccsprite1 > killSprite
+    sprite5 sprite2 > stepBack
+    sprite5 wall > stepBack
+    sprite5 sprite5 > stepBack
+    sprite5 sprite4 > stepBack
+    csprite2 sprite2 > stepBack
+    csprite2 sprite4 > stepBack
+    ccsprite1 ccsprite2 > killSprite
+    ccsprite2 ccsprite1 > transformTo stype=sprite4 scoreChange=1
+    sprite3 csprite1 > killIfOtherHasMore resource=sprite4 limit=9 scoreChange=100
+  TerminationSet
+    SpriteCounter stype=csprite1 limit=0 win=False
+    SpriteCounter stype=sprite3 limit=0 win=True

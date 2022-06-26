@@ -1,0 +1,20 @@
+BasicGame
+  SpriteSet
+    sprite1 > Immovable color=color1
+    sprite2 > Chaser stype=sprite1 color=color2 speed=0.1
+    sprite3 > Flicker limit=5
+    sprite4 > ShootAvatar stype=sprite3
+    sprite5 > Immovable color=color3
+  LevelMapping
+    c > sprite1
+    m > sprite2
+    A > sprite4
+    w > sprite5
+  InteractionSet
+    movable sprite5 > stepBack
+    sprite2 sprite1 > killSprite
+    sprite1 sprite2 > killSprite
+    sprite2 sprite3 > killSprite
+  TerminationSet
+    SpriteCounter stype=sprite1 win=False
+    SpriteCounter stype=sprite2 win=True

@@ -1,1 +1,0 @@
-# vgdl-from-gpt2

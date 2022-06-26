@@ -1,0 +1,26 @@
+BasicGame
+  SpriteSet
+    sprite1 > SpawnPoint stype=c_sprite2 prob=0.02 color=color1
+    sprite2 > SpawnPoint stype=c_sprite3 prob=0.05 color=color2
+    sprite3 > Resource color=color3 limit=10
+    sprite5 > Immovable color=color6
+    sprite4 > csprite1 > MovingAvatar csprite2 > RandomNPC speed=1 cooldown=3 color=color4 csprite3 > Chaser stype=c_sprite1 cooldown=6 speed=0.5 color=color5
+  LevelMapping
+    0 > sprite1
+    1 > sprite2
+    . > sprite3
+    2 > csprite3
+    w > sprite5
+  InteractionSet
+    sprite3 csprite1 > collectResource scoreChange=1
+    sprite3 csprite1 > killSprite
+    sprite4 sprite5 > stepBack
+    csprite1 csprite3 > killIfHasLess resource=sprite3 limit=1 scoreChange=-1
+    csprite1 csprite3 > changeResource resource=sprite3 value=-1
+    csprite3 csprite1 > killSprite
+    csprite2 csprite3 > transformTo stype=sprite3
+    csprite3 csprite2 > killSprite
+    csprite1 sprite2 > killSprite
+  TerminationSet
+    Timeout limit=1000 win=True
+    SpriteCounter stype=c_sprite1 limit=0 win=False

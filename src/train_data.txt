@@ -1,0 +1,236 @@
+vgdlgame 4 sprites
+BasicGame
+  SpriteSet
+    goal  > Immovable color=GREEN
+    key   > Immovable color=ORANGE
+    sword > Flicker limit=5 singleton=True
+    movable >
+      avatar  > ShootAvatar   stype=sword
+        nokey   >
+        withkey > color=ORANGE
+      monster > RandomNPC cooldown=4
+  LevelMapping
+    G > goal
+    + > key
+    A > nokey
+    1 > monster
+  InteractionSet
+    movable wall  > stepBack= > log water
+    nokey goal    > stepBack
+    goal withkey  > killSprite
+    monster sword > killSprite
+    avatar monster> killSprite
+    key  avatar   > killSprite
+    nokey key     > transformTo stype=withkey
+  TerminationSet
+    SpriteCounter stype=goal   win=True
+    SpriteCounter stype=avatar win=False
+
+<|endoftext|>
+
+vgdlgame 6 sprites
+BasicGame
+    SpriteSet
+        base    > Immovable    color=WHITE
+        avatar  > FlakAvatar   stype=sam
+        missile > Missile
+            sam  > orientation=UP    color=BLUE singleton=True
+            bomb > orientation=DOWN  color=RED  speed=0.5
+        alien   > Bomber       stype=bomb   prob=0.01  cooldown=3 speed=0.75
+        portal  > SpawnPoint   stype=alien  cooldown=16   total=20
+
+    LevelMapping
+        0 > base
+        1 > portal
+
+    TerminationSet
+        SpriteCounter      stype=avatar               limit=0 win=False
+        MultiSpriteCounter stype1=portal stype2=alien limit=0 win=True
+
+    InteractionSet
+        avatar  EOS  > stepBack
+        alien   EOS  > turnAround
+        missile EOS  > killSprite
+        missile base > killSprite
+        base missile > killSprite
+        base   alien > killSprite
+        avatar alien > killSprite
+        avatar bomb  > killSprite
+        alien  sam   > killSprite
+
+<|endoftext|>
+
+vgdlgame 7 sprites
+BasicGame
+    SpriteSet
+        forest > SpawnPoint stype=log prob=0.4  cooldown=10
+        structure > Immovable
+            water > color=BLUE
+            goal  > color=GREEN
+        log    > Missile   orientation=LEFT  speed=0.1 color=BROWN
+        safety > Resource  limit=2 color=BROWN
+        truck  > Missile   orientation=RIGHT
+            fasttruck  > speed=0.2  color=ORANGE
+            slowtruck  > speed=0.1  color=RED
+        wall > Immovable color=BLACK
+    InteractionSet
+        goal avatar  > killSprite
+        avatar log   > changeResource resource=safety value=2
+        avatar log   > pullWithIt   # note how one collision can have multiple effects
+        avatar wall  > stepBack
+        avatar water > killIfHasLess  resource=safety limit=0
+        avatar water > changeResource resource=safety value=-1
+        avatar truck > killSprite
+        log    EOS   > killSprite
+        truck  EOS   > wrapAround
+    TerminationSet
+        SpriteCounter stype=goal   limit=0 win=True
+        SpriteCounter stype=avatar limit=0 win=False
+    LevelMapping
+        G > goal
+        0 > water
+        1 > forest water
+        2 > forest wall log
+        - > slowtruck
+        x > fasttruck
+        = > log water
+
+<|endoftext|>
+
+vgdlgame 6 sprites
+BasicGame
+  SpriteSet
+      city  > Immovable color=GREEN
+      incoming > Chaser stype=city color=ORANGE speed=0.1
+      explosion > Flicker limit=5
+      avatar  > ShootAvatar stype=explosion
+  LevelMapping
+      c > city
+      m > incoming
+  InteractionSet
+      movable wall  > stepBack
+      incoming city > killSprite
+      city incoming > killSprite
+      incoming explosion > killSprite
+  TerminationSet
+      SpriteCounter stype=city   win=False
+      SpriteCounter stype=incoming win=True
+
+<|endoftext|>
+
+vgdlgame 6 sprites
+BasicGame
+    SpriteSet
+        carcass > Immovable color=BROWN
+        goat > stype=avatar cooldown=3
+            angry  > Chaser  color=ORANGE
+            scared > Fleeing color=BLUE
+    InteractionSet
+        goat   wall    > stepBack
+        avatar wall    > stepBack
+        avatar  angry  > killSprite
+        carcass scared > killSprite
+        scared avatar  > transformTo stype=carcass
+        scared carcass > transformTo stype=angry
+    LevelMapping
+        0 > scared
+    TerminationSet
+        SpriteCounter stype=scared win=True
+        SpriteCounter stype=avatar win=False
+
+<|endoftext|>
+
+vgdlgame 7 sprites
+BasicGame
+    SpriteSet
+        bullet > Missile
+            slowbullet > speed=0.1 color=ORANGE
+                upslow    >     orientation=UP
+                downslow  >     orientation=DOWN
+                leftslow  >     orientation=LEFT
+                rightslow >     orientation=RIGHT
+            fastbullet > speed=0.2  color=RED
+                rightfast >     orientation=RIGHT
+                downfast  >     orientation=DOWN
+        wall      > Immovable
+        goal      > Immovable  color=GREEN
+    InteractionSet
+        goal   avatar > killSprite
+        avatar bullet > killSprite
+        avatar wall   > stepBack
+        bullet EOS    > wrapAround
+    TerminationSet
+        SpriteCounter stype=goal   limit=0 win=True
+        SpriteCounter stype=avatar limit=0 win=False
+    LevelMapping
+        ^ > upslow
+        < > leftslow
+        v > downslow
+        - > rightslow
+        = > rightfast
+        V > downfast
+        G > goal
+
+<|endoftext|>
+
+vgdlgame 4 sprites
+BasicGame
+    SpriteSet
+        goal > Immovable color=GREEN
+            othergoal >
+            mygoal    >
+        racket > VerticalAvatar speed=0.25
+            avatar      > alternate_keys=True
+            otheravatar > color=BLUE
+        ball > Missile orientation=LEFT speed=15 color=ORANGE physicstype=NoFrictionPhysics
+    TerminationSet # from the perspective of player 1 (on the left)
+        SpriteCounter stype=othergoal limit=6 win=False
+        SpriteCounter stype=mygoal    limit=6 win=True
+    InteractionSet
+        goal ball   > killSprite
+        ball racket > bounceDirection
+        ball wall   > wallBounce
+        racket wall > stepBack
+    LevelMapping
+        - > mygoal
+        + > othergoal
+        a > otheravatar
+        o > ball
+
+<|endoftext|>
+
+vgdlgame 6 sprites
+BasicGame
+    SpriteSet
+        cocoon > Immovable color=BLUE
+        animal > physicstype=GridPhysics
+            avatar    > MovingAvatar
+            butterfly > RandomNPC speed=0.6
+    TerminationSet
+        SpriteCounter stype=butterfly win=True
+        SpriteCounter stype=cocoon    win=False
+    InteractionSet
+        butterfly avatar > killSprite
+        butterfly cocoon > cloneSprite
+        cocoon butterfly > killSprite
+        animal    wall   > stepBack
+    LevelMapping
+        1 > butterfly
+        0 > cocoon
+
+<|endoftext|>
+
+vgdlgame 3 sprites
+BasicGame
+    SpriteSet
+        pad    > Passive color=BLUE
+        avatar > InertialAvatar physicstype=GravityPhysics
+    TerminationSet
+        SpriteCounter stype=pad limit=4 win=True
+        SpriteCounter stype=avatar      win=False
+    InteractionSet
+        avatar wall > killSprite
+        avatar EOS > killSprite
+        pad avatar  > killIfSlow    # relative velocity
+    LevelMapping
+        G > pad

@@ -1,0 +1,24 @@
+BasicGame
+  SpriteSet
+    sprite1 > Missile csprite1 > speed=0.1 color=color1 ccsprite1 > orientation=UP ccsprite2 > orientation=DOWN ccsprite3 > orientation=LEFT ccsprite4 > orientation=RIGHT csprite2 > speed=0.2 color=color2 ccsprite5 > orientation=RIGHT ccsprite6 > orientation=DOWN
+    sprite2 > Immovable
+    sprite3 > Immovable color=color3
+    sprite4 > color=color4
+  InteractionSet
+    sprite3 sprite4 > killSprite
+    sprite4 sprite1 > killSprite
+    sprite4 sprite2 > stepBack
+    bullet EOS > wrapAround
+  TerminationSet
+    SpriteCounter stype=sprite3 limit=0 win=True
+    SpriteCounter stype=sprite4 limit=0 win=False
+  LevelMapping
+    ^ > ccsprite1
+    < > ccsprite3
+    v > ccsprite2
+    - > ccsprite4
+    = > ccsprite5
+    V > ccsprite6
+    G > sprite3
+    w > sprite2
+    A > sprite4

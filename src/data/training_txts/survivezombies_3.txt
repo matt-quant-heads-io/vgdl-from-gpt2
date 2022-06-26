@@ -1,0 +1,30 @@
+8 sprites, 9 interactions, 2 termination conditions, 5 level mappings, vgdlgame.
+BasicGame
+  SpriteSet
+1)    sprite4 > 
+2)      csprite1 > MovingAvatar 
+3)      csprite2 > RandomNPC speed=1 cooldown=3 color=color4 
+4)      csprite3 > Chaser stype=c_sprite1 cooldown=6 speed=0.5 color=color5
+5)    sprite2 > SpawnPoint stype=c_sprite3 prob=0.05 color=color2
+6)    sprite3 > Resource color=color3 limit=10
+7)    sprite1 > SpawnPoint stype=c_sprite2 prob=0.02 color=color1
+8)    sprite5 > Immovable color=color6
+  LevelMapping
+1)    0 > sprite1
+2)    . > sprite3
+3)    w > sprite5
+4)    2 > csprite3
+5)    1 > sprite2
+  InteractionSet
+1)    csprite3 csprite2 > killSprite
+2)    sprite3 csprite1 > collectResource scoreChange=1
+3)    sprite4 sprite5 > stepBack
+4)    sprite3 csprite1 > killSprite
+5)    csprite3 csprite1 > killSprite
+6)    csprite1 sprite2 > killSprite
+7)    csprite1 csprite3 > changeResource resource=sprite3 value=-1
+8)    csprite1 csprite3 > killIfHasLess resource=sprite3 limit=1 scoreChange=-1
+9)    csprite2 csprite3 > transformTo stype=sprite3
+  TerminationSet
+1)    Timeout limit=1000 win=True
+2)    SpriteCounter stype=c_sprite1 limit=0 win=False

@@ -1,0 +1,29 @@
+9 sprites, 2 termination conditions, 7 interactions, 5 level mappings, vgdlgame.
+BasicGame
+  SpriteSet
+1)    sprite1 > Immovable color=GREEN
+2)    sprite2 > Immovable color=ORANGE
+3)    sprite3 > Flicker limit=5 singleton=True
+4)    sprite4 >
+5)      csprite1 > ShootAvatar stype=sprite3
+6)        ccsprite1 >
+7)        ccsprite2 > color=ORANGE
+8)      csprite2 > RandomNPC cooldown=4
+9)    sprite5 > Immovable color=RED
+  InteractionSet
+1)    sprite4 sprite5 > stepBack
+2)    sprite2  csprite1 > killSprite
+3)    csprite2 sprite3 > killSprite
+4)    ccsprite1 sprite2 > transformTo stype=ccsprite2
+5)    csprite1 csprite2> killSprite
+6)    ccsprite1 sprite1 > stepBack
+7)    sprite1 ccsprite2 > killSprite
+  LevelMapping
+1)    w > sprite5
+2)    + > sprite2
+3)    G > sprite1
+4)    1 > csprite2
+5)    A > ccsprite1
+  TerminationSet
+1)    SpriteCounter stype=sprite1 win=True
+2)    SpriteCounter stype=csprite1 win=False

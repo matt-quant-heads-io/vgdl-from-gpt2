@@ -1,0 +1,24 @@
+BasicGame
+  SpriteSet
+    sprite1 > Immovable color=color1
+    sprite2 > Immovable color=color2
+    sprite3 > Flicker limit=5 singleton=True
+    sprite4 > csprite1 > ShootAvatar stype=sprite3 ccsprite1 > ccsprite2 > color=color2 csprite2 > RandomNPC cooldown=4
+    sprite5 > Immovable color=color3
+  LevelMapping
+    G > sprite1
+    + > sprite2
+    A > ccsprite1
+    1 > csprite2
+    w > sprite5
+  InteractionSet
+    sprite4 sprite5 > stepBack
+    ccsprite1 sprite1 > stepBack
+    sprite1 ccsprite2 > killSprite
+    csprite2 sprite3 > killSprite
+    csprite1 csprite2> killSprite
+    sprite2  csprite1 > killSprite
+    ccsprite1 sprite2 > transformTo stype=ccsprite2
+  TerminationSet
+    SpriteCounter stype=sprite1 win=True
+    SpriteCounter stype=csprite1 win=False

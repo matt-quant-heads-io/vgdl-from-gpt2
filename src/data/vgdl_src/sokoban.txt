@@ -1,0 +1,19 @@
+BasicGame
+  SpriteSet
+    sprite1 > Immovable color=color1
+    sprite2 > MovingAvatar
+    sprite3 > Passive
+    sprite4 > Immovable color=color2
+  LevelMapping
+    0 > sprite1
+    1 > sprite3
+    A > sprite2
+    w > sprite4
+  InteractionSet
+    sprite2 sprite4 > stepBack
+    sprite3 sprite2 > bounceForward
+    sprite3 sprite4 > undoAll
+    sprite3 sprite3 > undoAll
+    sprite3 sprite1 > killSprite
+  TerminationSet
+    SpriteCounter stype=sprite3 limit=0 win=True

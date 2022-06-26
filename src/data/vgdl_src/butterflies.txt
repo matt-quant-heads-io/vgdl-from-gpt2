@@ -1,0 +1,19 @@
+BasicGame
+  SpriteSet
+    sprite1 > Immovable color=color1
+    sprite2 > physicstype=GridPhysics csprite1 > MovingAvatar csprite2 > RandomNPC speed=speed1
+    sprite3 > Immovable color=color2
+    sprite4 >
+  TerminationSet
+    SpriteCounter stype=csprite2 win=True
+    SpriteCounter stype=sprite1 win=False
+  InteractionSet
+    csprite2 csprite1 > killSprite
+    csprite2 sprite1 > cloneSprite
+    sprite1 csprite2 > killSprite
+    sprite2 sprite3 > stepBack
+  LevelMapping
+    1 > csprite2
+    0 > sprite1
+    w > sprite3
+    A > sprite4
